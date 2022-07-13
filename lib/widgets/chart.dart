@@ -40,7 +40,6 @@ class _ChartState extends State<Chart> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 190,
       padding: const EdgeInsets.all(10.0),
       child: Card(
         margin: const EdgeInsets.all(10.0),

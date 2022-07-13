@@ -18,63 +18,79 @@ class _TransactionListState extends State<TransactionList> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: SizedBox(
-        height: 400,
         child: widget.tx.isEmpty
-            ? Center(
-                child: Column(
-                  children: <Widget>[
-                    Text(
-                      'No transactions added yet!!',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.all(10.0),
-                      height: 200,
-                      child: Image.asset(
-                        "assets/images/waiting.png",
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            : ListView.builder(
-                itemCount: widget.tx.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    elevation: 5.0,
-                    child: ListTile(
-                      leading: Text(
-                        "\$${widget.tx[index].amount.toStringAsFixed(2)}",
-                        style: const TextStyle(
-                            fontSize: 20.0, fontWeight: FontWeight.bold),
-                      ),
-                      title: Text(
-                        widget.tx[index].title,
-                        style: const TextStyle(
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.bold,
+            ? LayoutBuilder(
+                builder: (context, constraints) {
+                  return Center(
+                    child: Column(
+                      children: <Widget>[
+                        Text(
+                          'No transactions added yet!!',
+                          style: Theme.of(context).textTheme.headline6,
                         ),
-                      ),
-                      subtitle: Text(
-                        DateFormat.yMMMd().format(
-                          widget.tx[index].dt,
+                        const SizedBox(
+                          height: 20,
                         ),
-                      ),
-                      trailing: IconButton(
-                        onPressed: () => widget.deleteTransactionCallBack(
-                          widget.tx[index].id,
+                        Container(
+                          margin: const EdgeInsets.all(10.0),
+                          height: 200,
+                          child: Image.asset(
+                            "assets/images/waiting.png",
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                        icon: const Icon(
-                          Icons.delete,
-                        ),
-                      ),
+                      ],
                     ),
                   );
                 },
+              )
+            : Container(
+                height: 300,
+                child: ListView.builder(
+                  itemCount: widget.tx.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      elevation: 5.0,
+                      child: ListTile(
+                        leading: Text(
+                          "\$${widget.tx[index].amount.toStringAsFixed(2)}",
+                          style: const TextStyle(
+                              fontSize: 20.0, fontWeight: FontWeight.bold),
+                        ),
+                        title: Text(
+                          widget.tx[index].title,
+                          style: const TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        subtitle: Text(
+                          DateFormat.yMMMd().format(
+                            widget.tx[index].dt,
+                          ),
+                        ),
+                        trailing: MediaQuery.of(context).size.width > 400
+                            ? TextButton.icon(
+                                onPressed: () =>
+                                    widget.deleteTransactionCallBack(
+                                  widget.tx[index].id,
+                                ),
+                                icon: const Icon(Icons.delete),
+                                label: const Text('Remove List Item'),
+                              )
+                            : IconButton(
+                                onPressed: () =>
+                                    widget.deleteTransactionCallBack(
+                                  widget.tx[index].id,
+                                ),
+                                icon: const Icon(
+                                  Icons.delete,
+                                ),
+                              ),
+                      ),
+                    );
+                  },
+                ),
               ),
       ),
     );
