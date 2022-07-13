@@ -31,12 +31,13 @@ class _TransactionListState extends State<TransactionList> {
                       height: 20,
                     ),
                     Container(
-                        margin: const EdgeInsets.all(10.0),
-                        height: 200,
-                        child: Image.asset(
-                          "assets/images/waiting.png",
-                          fit: BoxFit.cover,
-                        )),
+                      margin: const EdgeInsets.all(10.0),
+                      height: 200,
+                      child: Image.asset(
+                        "assets/images/waiting.png",
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ],
                 ),
               )
@@ -54,15 +55,22 @@ class _TransactionListState extends State<TransactionList> {
                       title: Text(
                         widget.tx[index].title,
                         style: const TextStyle(
-                            fontSize: 16.0, fontWeight: FontWeight.bold),
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       subtitle: Text(
-                        DateFormat.yMMMd().format(widget.tx[index].dt),
+                        DateFormat.yMMMd().format(
+                          widget.tx[index].dt,
+                        ),
                       ),
                       trailing: IconButton(
-                        onPressed: () => widget
-                            .deleteTransactionCallBack(widget.tx[index].id),
-                        icon: const Icon(Icons.delete),
+                        onPressed: () => widget.deleteTransactionCallBack(
+                          widget.tx[index].id,
+                        ),
+                        icon: const Icon(
+                          Icons.delete,
+                        ),
                       ),
                     ),
                   );

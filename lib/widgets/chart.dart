@@ -51,11 +51,12 @@ class _ChartState extends State<Chart> {
             return Flexible(
               fit: FlexFit.tight,
               child: ChartBar(
-                  label: data['day'] as String,
-                  spending: data['amount'] as double,
-                  spendingPercent: totalSpending == 0
-                      ? 0
-                      : (data['amount'] as double) / totalSpending),
+                label: data['day'] as String,
+                spending: data['amount'] as double,
+                spendingPercent: totalSpending == 0
+                    ? 0
+                    : (data['amount'] as double) / totalSpending,
+              ),
             );
           }).toList(),
         ),

@@ -21,15 +21,18 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.indigo,
         fontFamily: 'Quicksand',
         textTheme: ThemeData.light().textTheme.copyWith(
-              headline6:
-                  const TextStyle(fontFamily: 'OpenSans', fontSize: 14.0),
+              headline6: const TextStyle(
+                fontFamily: 'OpenSans',
+                fontSize: 14.0,
+              ),
             ),
         appBarTheme: const AppBarTheme(
-            titleTextStyle: TextStyle(
-          fontFamily: 'OpenSans',
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-        )),
+          titleTextStyle: TextStyle(
+            fontFamily: 'OpenSans',
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       debugShowCheckedModeBanner: false,
     );
@@ -46,14 +49,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   void startAddTransaction(BuildContext context) {
     showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return GestureDetector(
-            onTap: () {},
-            behavior: HitTestBehavior.opaque,
-            child: NewTransaction(newTransactionCallBack: addTransaction),
-          );
-        });
+      context: context,
+      builder: (context) {
+        return GestureDetector(
+          onTap: () {},
+          behavior: HitTestBehavior.opaque,
+          child: NewTransaction(newTransactionCallBack: addTransaction),
+        );
+      },
+    );
   }
 
   final List<Transaction> tx = [];
@@ -65,15 +69,19 @@ class _HomePageState extends State<HomePage> {
       id: DateTime.now().toString(),
       title: title,
     );
-    setState(() {
-      tx.add(newTX);
-    });
+    setState(
+      () {
+        tx.add(newTX);
+      },
+    );
   }
 
   void _deleteTransaction(String id) {
-    setState(() {
-      tx.removeWhere((transaction) => transaction.id == id);
-    });
+    setState(
+      () {
+        tx.removeWhere((transaction) => transaction.id == id);
+      },
+    );
   }
 
   List<Transaction> get _recentTransaction {
