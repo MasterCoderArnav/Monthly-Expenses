@@ -150,12 +150,8 @@ class _HomePageState extends State<HomePage> {
     ];
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
-
-    final PreferredSizeWidget appBar = Platform.isIOS
+  PreferredSizeWidget _buildAppBar() {
+    return Platform.isIOS
         ? CupertinoNavigationBar(
             middle: const Text('Monthly Expenses'),
             trailing: Row(
@@ -171,15 +167,26 @@ class _HomePageState extends State<HomePage> {
             ),
           )
         : AppBar(
-            title: const Text('Monthly Expenses'),
+            title: const Text(
+              'Monthly Expenses',
+            ),
             centerTitle: true,
             elevation: 0.0,
             actions: <Widget>[
               IconButton(
-                  onPressed: () => startAddTransaction(context),
-                  icon: const Icon(Icons.add))
+                onPressed: () => startAddTransaction(context),
+                icon: const Icon(Icons.add),
+              ),
             ],
           ) as PreferredSizeWidget;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+
+    final PreferredSizeWidget appBar = _buildAppBar();
     final txListWidget = Container(
       height: (MediaQuery.of(context).size.height -
               appBar.preferredSize.height -
