@@ -103,6 +103,53 @@ class _HomePageState extends State<HomePage> {
     }).toList();
   }
 
+  List<Widget> _buildLandscape(final txListWidget, PreferredSizeWidget appBar) {
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Show Chart',
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          Switch.adaptive(
+              value: _switchFlag,
+              onChanged: (val) {
+                setState(() {
+                  _switchFlag = val;
+                });
+              }),
+        ],
+      ),
+      _switchFlag
+          ? Container(
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.7,
+              child: Chart(
+                transactions: _recentTransaction,
+              ),
+            )
+          : txListWidget,
+    ];
+  }
+
+  List<Widget> _buildPotrait(PreferredSizeWidget appBar, final txListWidget) {
+    return [
+      Container(
+        height: (MediaQuery.of(context).size.height -
+                appBar.preferredSize.height -
+                MediaQuery.of(context).padding.top) *
+            0.3,
+        child: Chart(
+          transactions: _recentTransaction,
+        ),
+      ),
+      txListWidget
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final isLandscape =
@@ -148,46 +195,8 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            if (isLandscape)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Show Chart',
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  Switch.adaptive(
-                      value: _switchFlag,
-                      onChanged: (val) {
-                        setState(() {
-                          _switchFlag = val;
-                        });
-                      }),
-                ],
-              ),
-            if (!isLandscape)
-              Container(
-                height: (MediaQuery.of(context).size.height -
-                        appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
-                    0.3,
-                child: Chart(
-                  transactions: _recentTransaction,
-                ),
-              ),
-            if (!isLandscape) txListWidget,
-            if (isLandscape)
-              _switchFlag
-                  ? Container(
-                      height: (MediaQuery.of(context).size.height -
-                              appBar.preferredSize.height -
-                              MediaQuery.of(context).padding.top) *
-                          0.7,
-                      child: Chart(
-                        transactions: _recentTransaction,
-                      ),
-                    )
-                  : txListWidget,
+            if (isLandscape) ..._buildLandscape(txListWidget, appBar),
+            if (!isLandscape) ..._buildPotrait(appBar, txListWidget)
           ],
         ),
       ),

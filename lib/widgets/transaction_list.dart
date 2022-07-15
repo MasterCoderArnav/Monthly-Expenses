@@ -1,6 +1,6 @@
 import 'package:demo2/models/transaction.dart';
+import 'package:demo2/widgets/transaction_item.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 class TransactionList extends StatefulWidget {
   final List<Transaction> tx;
@@ -49,45 +49,10 @@ class _TransactionListState extends State<TransactionList> {
                 child: ListView.builder(
                   itemCount: widget.tx.length,
                   itemBuilder: (context, index) {
-                    return Card(
-                      elevation: 5.0,
-                      child: ListTile(
-                        leading: Text(
-                          "\$${widget.tx[index].amount.toStringAsFixed(2)}",
-                          style: const TextStyle(
-                              fontSize: 20.0, fontWeight: FontWeight.bold),
-                        ),
-                        title: Text(
-                          widget.tx[index].title,
-                          style: const TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        subtitle: Text(
-                          DateFormat.yMMMd().format(
-                            widget.tx[index].dt,
-                          ),
-                        ),
-                        trailing: MediaQuery.of(context).size.width > 400
-                            ? TextButton.icon(
-                                onPressed: () =>
-                                    widget.deleteTransactionCallBack(
-                                  widget.tx[index].id,
-                                ),
-                                icon: const Icon(Icons.delete),
-                                label: const Text('Remove List Item'),
-                              )
-                            : IconButton(
-                                onPressed: () =>
-                                    widget.deleteTransactionCallBack(
-                                  widget.tx[index].id,
-                                ),
-                                icon: const Icon(
-                                  Icons.delete,
-                                ),
-                              ),
-                      ),
+                    return TransactionItem(
+                      tx: widget.tx[index],
+                      deleteTransactionCallBack:
+                          widget.deleteTransactionCallBack,
                     );
                   },
                 ),
